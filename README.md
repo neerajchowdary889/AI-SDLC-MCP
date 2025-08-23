@@ -47,12 +47,18 @@ Add this to your Claude Desktop MCP configuration:
 {
   "mcpServers": {
     "ai-sldc-docs": {
-      "command": "python",
-      "args": ["path/to/ai-sldc-mcp/main.py"],
-      "cwd": "path/to/ai-sldc-mcp"
+      "command": "D:/CodeSection/AI-SDLC-MCP/run_mcp_server.bat",
+      "args": [],
+      "cwd": "D:/CodeSection/AI-SDLC-MCP",
+      "env": {
+        "PYTHONPATH": "D:/CodeSection/AI-SDLC-MCP"
+      },
+      "disabled": false,
+      "autoApprove": ["search_docs", "list_documents", "get_statistics"]
     }
   }
 }
+
 ```
 
 ## MCP Tools
@@ -60,17 +66,23 @@ Add this to your Claude Desktop MCP configuration:
 The server provides these tools for AI assistants:
 
 ### `search_docs`
+
 Search through documentation content
+
 - `query` (string): Search query
 - `tags` (array): Filter by tags
 - `limit` (number): Maximum results (default: 10)
 
 ### `get_document`
+
 Get a specific document by path
+
 - `path` (string): Document file path
 
 ### `list_documents`
+
 List all available documents
+
 - `limit` (number): Maximum results (default: 50)
 
 ## Usage with Claude
@@ -80,6 +92,7 @@ List all available documents
 3. Ask Claude questions about your documentation
 
 Example queries:
+
 - "What does our API documentation say about authentication?"
 - "Find all documents mentioning deployment procedures"
 - "Show me the latest changes to our architecture docs"
@@ -109,6 +122,7 @@ python -m pytest tests/
 ### Dependencies
 
 Key Python packages:
+
 - `pydantic` - Data validation and models
 - `whoosh` - Full-text search indexing
 - `watchdog` - File system monitoring
