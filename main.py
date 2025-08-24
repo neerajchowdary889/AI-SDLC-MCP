@@ -23,7 +23,13 @@ def start_server():
     os.environ["MCP_API_KEY"] = os.getenv("MCP_API_KEY", "replit-mcp-key-2024")
     
     # Import and run the server
-    from start_server import *
+    import uvicorn
+    uvicorn.run(
+        "cloud_server:app",
+        host="0.0.0.0",
+        port=8000,
+        reload=False
+    )
 
 if __name__ == "__main__":
     print("🚀 Starting AI-SLDC Cloud MCP Server on Replit...")
