@@ -1,55 +1,31 @@
 #!/usr/bin/env python3
 """
-AI-SLDC MCP Server - Main entry point
+Replit entry point - starts the cloud MCP server
 """
-
-import asyncio
+import os
+import subprocess
 import sys
-from pathlib import Path
-from loguru import logger
 
-from src.document_service import DocumentService
-from src.file_watcher import FileWatcher
-from src.mcp_server import MCPServer
-
-
-async def main():
-    """Main entry point for the MCP server"""
+def install_requirements():
+    """Install requirements if not already installed"""
     try:
-        # Setup logging
-        logger.remove()
-        logger.add(sys.stderr, level="INFO", format="{time} | {level} | {message}")
-        
-        # Initialize services
-        logger.info("Starting AI-SLDC MCP Server...")
-        
-        document_service = DocumentService()
-        file_watcher = FileWatcher(document_service, root_path="./docs")
-        mcp_server = MCPServer(document_service)
-        
-        # Start file watcher
-        await file_watcher.start()
-        
-        # Log statistics
-        stats = document_service.get_statistics()
-        logger.info(f"Loaded {stats.total_files} documents ({stats.total_words} words)")
-        
-        logger.info("MCP Server ready for connections")
-        
-        # Keep the server running
-        while True:
-            await asyncio.sleep(1)
-            
-    except KeyboardInterrupt:
-        logger.info("Received shutdown signal")
-    except Exception as e:
-        logger.error(f"Server error: {e}")
+        subprocess.check_call([sys.executable, "-m", "pip", "install", "-r", "cloud_requirements.txt"])
+        print("✅ Dependencies installed successfully")
+    except subprocess.CalledProcessError as e:
+        print(f"❌ Failed to install dependencies: {e}")
         sys.exit(1)
-    finally:
-        if 'file_watcher' in locals():
-            await file_watcher.stop()
-        logger.info("Server stopped")
 
+def start_server():
+    """Start the cloud MCP server"""
+    # Set environment variables for Replit
+    os.environ["HOST"] = "0.0.0.0"
+    os.environ["PORT"] = "8000"
+    os.environ["MCP_API_KEY"] = os.getenv("MCP_API_KEY", "replit-mcp-key-2024")
+    
+    # Import and run the server
+    from start_server import *
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    print("🚀 Starting AI-SLDC Cloud MCP Server on Replit...")
+    install_requirements()
+    start_server()

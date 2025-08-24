@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "ai-sldc-docs": {
+      "command": "python",
+      "args": ["mcp_bridge.py"],
+      "cwd": "D:\\CodeSection\\AI-SDLC-MCP"
+    }
+  }
+}

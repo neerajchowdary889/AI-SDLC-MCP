@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  mcp-cloud-server:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - PORT=8000
+      - MCP_API_KEY=your-secret-api-key-change-this
+      - PYTHONPATH=/app
+    volumes:
+      - ./docs:/app/docs
+      - ./index:/app/index
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s

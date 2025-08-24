@@ -4,7 +4,9 @@ from datetime import datetime
 from typing import Dict, Any, List, Optional
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from pydantic import BaseModel
-from loguru import logger
+import logging
+
+logger = logging.getLogger(__name__)
 
 from .document_service import DocumentService
 from .models import ContextQuery, MCPToolResult

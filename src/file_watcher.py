@@ -4,7 +4,9 @@ from pathlib import Path
 from typing import List, Set, Callable, Optional
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler, FileSystemEvent
-from loguru import logger
+import logging
+
+logger = logging.getLogger(__name__)
 
 from .document_service import DocumentService
 from .models import FileWatchEvent

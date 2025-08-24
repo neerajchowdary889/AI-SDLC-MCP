@@ -1,6 +1,7 @@
 import os
 import re
 import hashlib
+import logging
 from datetime import datetime
 from pathlib import Path
 from typing import Dict, List, Optional, Set, Tuple
@@ -10,7 +11,10 @@ import frontmatter
 from whoosh import fields, index
 from whoosh.qparser import QueryParser
 from whoosh.scoring import BM25F
-from loguru import logger
+
+# Configure standard logging instead of loguru
+logger = logging.getLogger(__name__)
+logging.basicConfig(level=logging.INFO)
 
 from .models import (
     DocumentContext, DocumentMetadata, ContextQuery, SearchResult, 
